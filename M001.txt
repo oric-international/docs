@@ -1,0 +1,771 @@
+                    Machine Code for the Oric Atmos       Peter N. Bragg        
+                    -------------------------------                             
+Intro                                                                           
+----- This is the first of a new series on Machine Code Programming, which      
+hopefully will help take some of the mystery out of the subject. These articles 
+are intended as a guide only, there is a limit to the size of the magazine and  
+we dont want the postman to have a hernia, or make the cat neurotic, when Oric  
+User Monthly arrives on the mat.                                                                                                                                For those who are new to this type of programming this first article is         
+intended to give a simple overview of the subject. Following articles will go   
+into more detail, on all the items mentioned here. The main aim behind this     
+series is to do two things. Firstly to explain machine code programming and how 
+to use it, secondly and perhaps more useful, to pass on a few hints and tips    
+which hopefully will make your programming more interesting and productive,     
+instead of having the Oric always a couple of bugs and a crash ahead of you.                                                                                    Usually machine code programming is thought to be very difficult, a skill far   
+beyond the average computer user. In fact this is quite wrong. The main         
+difficulty is that information on the subject is often presented in such a way,
+that it is difficult for the newcomer to take it in. I am not an expert and I   
+am not a professional programmer. Quite a few readers know far more about the   
+subject of machine code programming and the Oric than I will ever know. My sole 
+qualification for writing this, is an ability to write machine code software    
+that will do what I want it to do, with the minimum amount of hassle and        
+computerised mayhem. Hopefully my somewhat unusual, but so far, fairly          
+successful approach to programming will work for you too.                                                                                                       
+
+Book at Bedtime                                                                 
+--------------- I hope to cover machine code programming fairly comprehensively 
+but you will find that reading books on the subject will help too. The Oric     
+Atmos manual, if you have it, has a brief introduction to machine code, which   
+is a good place to start. Obviously a good idea is to make your local library,  
+the first port of call. They wont have everything, but it is worth looking to   
+see what they do have.                                                                                                                                          The book on 6502 machine code by Rodney Zaks, was recommended by Stan Ellison.  
+I found "6502 Assembly Language Programming" by Lance Lethenthal very useful. I 
+must confess that I only read about a third of it in any real detail, so dont   
+think that you have struggle through everything. One book that I have found     
+invaluable is "Oric Advanced User Guide" by Leycester Whewell, which is a mine  
+of information about the Oric.                                                                                                                                  I used to do most of my reading (and even some of my programming) while         
+travelling on the London Underground, or while hanging around waiting. It is a  
+more interesting way of passing the time and you will find that you are more    
+receptive to new ideas when you are in a boring situation.                                                                                                      Of course a lot depends on the way information is presented. Most books I have  
+seen, list machine code instructions in alphabetical order, with a cryptic      
+collection of ticks, crosses and other hieroglyphics. Alphabetical order may    
+appear to make sense, but in fact it is not very useful to the newcomer. The    
+reason is that it tends to hide the fact that many instructions are related to  
+each other and understanding one instruction will make the operation of others  
+easy to understand too. Another favourite with manuals is a list of hexadecimal 
+and binary numbers consisting of a huge mass of 1's and 0's, more than enough   
+to knock a budgie off its perch. Dont let these worry you, there are easy ways  
+of dealing with this sort of thing.   
+                                          
+It is a good idea to consult more than one book. Many authors may be expert on  
+their subject, but find it difficult to pass on that knowledge to others. A     
+particular operation may be difficult to understand, even after you have read   
+the description several times. If you can, move on to another author and read   
+his description of the same operation. You will get a different perspective,    
+which is often enough to make the light dawn. Rather like those stereo pictures 
+which look flat, when viewed in isolation, but spring to life, when viewed     
+together.                                                                                                                                                       
+
+Setting the Atmosphere                                                         
+---------------------- Like many members, I use an Oric Atmos and the           
+information provided here is mainly "Atmos" based, for that reason, although I  
+should hasten to add that the machine code instructions are exactly the same    
+for both the Atmos and the Oric-1. The slight differences between the Atmos and 
+the original Oric-1, are mostly in the Operating System ROM chip and the manual.
+Although the the Atmos ROM and manual are not essential for successful machine  
+code programming they make a considerable improvement in the Oric operation and 
+if you can get hold of either they are worth the small cost involved. I also    
+use the Cumana V1.3 disk system, but I shall concentrate on information         
+suitable for use with the cassette tape systems, which means that it can be     
+used by any Oric user. Whether they have disks or not, should not matter.
+                                                                                       
+Watch your Language                                                             
+------------------- Binary Code, Assembly Language, Hexadecimal Code are all    
+terms used in connection with Machine Code, but just what are they ?                                                                                            BINARY CODE was the first real computer language. Entirely written in ones and  
+noughts, it is difficult even to recognise single instructions in a program. It 
+is now rarely used in programming except very occasionaly in small amounts for  
+specific items such as setting up hardware.                                                                                                                     ASSEMBLY LANGUAGE is still strictly speaking, binary code, but in the much      
+simpler form of a language which organises the binary code for you, into the    
+required group of ones and noughts for each instruction , so that a whole group 
+of say, 24 binary digits can be called up and used, by a simple label. The      
+labels are an abreviated description of the instruction operation and provide a 
+far easier way of reading and writing programs than raw binary code.                                                                                            HEXADECIMAL CODE is like Assembly language, in that it organises all those ones 
+and noughts into an easier system of numbers. These numbers are used by all     
+computer languages, including Assembler and Basic for operating and controlling 
+the computer. For instance each Basic command has to be converted into a        
+hexadecimal code by the computer, before it can act on the command. The         
+definition Hexadecimal is usualy abrieviated to "hex" and is normaly expressed  
+as a minimum of two digits (ie A9 or 08), which is one "byte". Each byte is     
+made up from a collection of eight of those binary ones and noughts.            
+Occasionally a half byte, single hex digit is used. This known as a "nybble".                                                                                   As for the expression MACHINE CODE, that is an overall term that applies to all 
+three of, binary code, hex code and assembly language. Most machine code        
+programs are written in Assembler. Hex code can also be used as a quick and     
+simple method for entering an Assembler program into the computer.                                                                                              Strictly speaking, any hex value should be shown as a number with a small       
+subscript "16", however as I use hex code most of the time, it is not necessary 
+to do that. A small "h" or "d" is sufficent to indicate hex or decimal values   
+on the rare ocassions it is required. For example 15d = 0Fh.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+
+Chatting up the Oric                                                            
+-------------------- When programming most computers there are just two things  
+that matter. One is obviously the language you are using, the other is the      
+computers Operating System.                                                                                                                                     
+
+The Language                                                                    
+------------ Lets look at language first. The Oric uses the 6502 Assembly       
+Language Set which contains about sixty instructions in all. However, as some   
+are not available on the Oric's 6502 chip and others are rarely used, this      
+simplifies things somewhat. Just like the individual components of those        
+wonderful "Lego" or "Mechano" sets, the Assembly Language instructions can be   
+used to build up large programs from quite simple components but unlike "Lego"  
+it wont cost an arm and a leg to do so. Once you have written your Assembly     
+language program, you can enter it into the Oric as simple hex code numbers,    
+using DATA and POKE commands in a short Basic routine. Alternatively, it can    
+entered as a language, using one of the software assemblers that are available.                                                                                 
+
+The Operating System                                                            
+-------------------- The other consideration after language, is the Operating   
+System. This is the system provided by the computer manafacturer to give any of 
+the software that you are using, access and control over all the computer       
+hardware both inside the computer and anything plugged in on the outside.       
+Essentialy the Operating System controls everything from image on the display   
+screen, to communications with external items such as the printer.                                                                                              The Operating System is usualy invisible to you, as it runs the essential       
+background services, such as the screen display and watching the keyboard. You  
+can of course ignore it and write machine code programs that do not need to use 
+it directly. However there are many useful routines which can be very simply    
+called for use in your own programs, which can save a lot of time and effort.   
+For example there are routines to read the keyboard and to write to the screen. 
+The Oric Operating System lives in the O.S. ROM chip together with Oric Basic.  
+There is a complete listing of its contents in the "Advanced User Guide",       
+previously mentioned. At first much of the listing will be meaningless to the   
+total beginner. Not to worry, any use of the Operating System, by these         
+articles, will be explained at the time. Also in another part of the forest,    
+Jon Haworth is running a series on both Oric ROMs, which should prove very      
+useful here too.                                                                                                                                                
+
+What the Hex is next                                                            
+-------------------- Using the Oric, it is possible to write machine code using 
+either the decimal or the hex code numbering systems. If I was restricted to    
+one piece of advice only, it would be simply, use hex code, not decimal when    
+programming in Assembler or Machine Code. In an era of "Decimalisation" and     
+"Metrication", this may seem strange advice, but believe me there is a good     
+reason for it.                                                                                                                                                  While most calculation is best done in decimal, calculation is not an essential 
+requirement of programming. Let the computer do its own calculating !           
+Programming is the means by which we control computer hardware and hex code     
+will provide that control, far easier than decimal values. This becomes more    
+obvious, as experience is gained, particularly when programming in Assembly     
+language. It took me a little while to to get used to writing 9,A,B ..etc       
+instead of 9,10,11 ...etc, but it was much easier than I expected. Having done  
+it that way from the start, I soon found reading and writing Assembly Language  
+programs a lot easier and the advantages can extend to Basic programming too.                                                                                   So much for the overview....... Next time, how to wear out the RESET button !!                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+
+
+Machine Code for the Oric Atmos (Part 2)    Peter N. Bragg                      
+-------------------------------                                   
+
+The Story so far                                                               
+ ---------------- In the first article (O.U.M. No.43), a couple of books were    
+recommended. There was a brief look at machine code in its various forms and    
+reasons were given for using hex rather than decimal code (its a lot easier).   
+The Oric, its language and operating systems were briefly looked at as well.                                                                                    The Kit Inspection                                                              
+------------------ I realise that a lot of people may have only a limited       
+amount of computer hardware. To avoid handicapping anybody for lack of          
+experience or hardware, I will assume that you are limited to a standard 48K    
+RAM Oric system and a cassette tape recorder for saving programs. Obviously     
+this need not stop you making use of other items such as disk drives etc, if    
+you have them. For the same reasons, I will also assume that you are able to    
+type in short Basic programs, but have no experience of machine code.                                                                                           
+
+Poking around in the Oric                                                       
+------------------------- The best way to learn about machine code is to put    
+some into the Oric and find out what effect it has and why. However to do this, 
+the first thing we need is some easy way to read and write to the Oric's memory.
+The Basic commands PEEK and POKE will do that for very small amounts of code.   
+Larger amounts can be used in Basic listings as DATA statements, which are then 
+POKEd in, by the appropriate part of the listing. Books and manuals often use   
+this method for practical machine code routines. The limitation is that if a    
+mistake is made, it is more difficult to see what is going on.                                                                                                  So before we procede with a look at the microprocessor and its instructions, it 
+will be neccessary to provide ourselves with the means to read and write        
+directly and easily into the Oric's program memory. The Basic routine included  
+here is fairly short and has little in the way of frills, but it will do all    
+that is required and also give you the freedom to experiment with and explore   
+the Oric as much as you wish. I rarely use Basic (Wad'yer mean, it shows ??).   
+This routine originated in the ZX81 and was last used to give the Archimedes    
+electronic fits. A machine code version would be better, but a listing          
+consisting of several sheets of hexadecimal gibberish, would probably bring a   
+lynching party to the door.                                                                                                                                     Using a utility of this type, to read and write hex code direct means that, we  
+can then concentrate on the assembly language and machine code programming      
+without confusing the picture with a surrounding Basic program. Later you will  
+find that it is really quite easy to add machine code to Basic programs and     
+even write programs entirely in machine code, but for the first stages it is    
+better to be able to look at the machine code in small pieces, without the      
+distraction of long listings.                                                                                                                                   The Basic BASIC !                                                               
+----------------- Enter the program and save it. The very few "REM" type        
+comments can be left out if you wish, otherwise enter it all as listed.                                                                                         Although the program was written for the standard 48K Oric, there is no reason  
+why it should not run on the 16K version too. Just alter the value for "M" in   
+Line 10, to start at a more suitable address, say to =1000. When using the      
+program you may find that you have to avoid the memory area =4000 to =BFFF in   
+the 16K Oric and later on, possibly make small adjustments to some of the       
+machine code items to suit your machine, but the program shown here should work 
+as listed in the 16K Oric, apart from the Line 10 item. I do not have a machine 
+to try it on, but there should be no problems.                                  
+
+The controls to examine the memory are                BASIC LISTING             
+very simple just four keys to give you                                          
+the choice of a fast or slow move through    10 A=0:B=0:C=0:M=#5000:' :Program to:                           
+the memory. When you run the program, you    30 GOSUB 410:'           :Read/Write:                           
+will find that the first thing that it       40 GET B$:B=ASC(B$):'    : Hex Code :                          
+displays is the memory location at           45 IF B=81 THEN END                           
+address =5000 and its contents. The SPACE    50 IF B=13 THEN A=A-1: GOTO 30                           
+BAR will move you on to the next address     55 IF B=32 THEN A=A+1: GOTO 30                           
+at =5001 and will allow you to step          60 IF B=72 THEN M=M+256: GOTO 30                           
+through the memory, showing the contents     70 IF B=76 THEN M=M-256: GOTO 30                           
+of each address in succession. The RETURN    75 IF B<48 THEN GOTO 40                           
+Key will return you to the previous          80 IF B<58 THEN B=(B-58)*16: GOTO 190                           
+address in the same way, counting down,      90 IF B<65 THEN GOTO 40                           
+=5001, =5000, =4FFF etc. This way you can    110 GOTO 40                           
+scan backwards or forwards through the       190 GET C$: C=ASC(C$)                           
+Oric's memory contents. If this is too       200 ID C<48 THEN GOTO 40                           
+slow and you want to go to another part      210 IF C<58 THEN GOTO 260                           
+of the Oric's memory, far more quickly,      220 IF C<65 THEN GOTO 40                           
+then press Key H to go higher, or Key L      230 IF C>70 THEN GOTO 40                           
+to go lower, in jumps of 100 hex bytes at    240 C=C-55                           
+a time. Apart from these four control        250 GOTO 270                           
+keys, there is one other, which is Key Q,    260 C=C-48                           
+to quit the program.                         270 LET D=C+B:POKE(M+A),D                                                                                                            So that is how to read the Oric's memory.    290 PRINT CHR$(11);:GOSUB 410                                   
+Writing to the Oric's memory is even         295 A=A+1 :GOTO 30                                   
+simpler. Just set the required start         400 '----Print Addr & Contents----'                                   
+address of your program in exactly the       410 PRINT HEX$(E):RETURN                                   
+same way as if you were examining the        420 E=PEEK(M+A):IF E<16 THEN GOTO 440                                   
+contents of that address and then type in    430 PRINT HEX$(E):RETURN                                   
+any two hex digits from the 0 to F           440 PRINT" ";HEX$(E);                                   
+hexadecimal range. You will now find that    450 PRINT CHR$(8);CHR$(8);CHR$(8);                                   
+the contents of that address have been       460 PRINT"#0":RETURN:'---Finish----'                                   
+replaced by a value which is the two                                            
+digits, you have just typed in and that                                         
+you have now automatically moved on to                                          
+the next address. In this way it is                                             
+possible to enter a machine code program                                        
+as a simple stream of hex numbers and it makes entering machine code programs   
+in hex code a real doddle.                                                                                                                                      Having checked that all is working OK and that you have at least one copy of    
+the program safely filed away, you can now use it to have a look around. The    
+program always starts at =5000, but you can alter this if you wish in Line 10.  
+If you go down, you will find the Oric's workspace and I/O control area, just   
+below your Basic program, writing into this area may cause the Oric to sulk.    
+The other way is upwards to the screen area at =BBA8 to =BFDF, which can be     
+written to with interesting results. Above this is the Operating System,        
+starting at =C000. This is ROM and anything written here will be ignored.                                                                                       No limits have been set on the memory area accessed by the program. If you try  
+to access memory that the Oric does not have, the program will drop out and you 
+just restart with RUN again. The program could easily be improved on. If you    
+want to change the control keys, Lines 45 to 70 are the ones to look at. I once 
+used U and D for Up and Down, instead of H and L. Not a good idea. Think about  
+it.                                                                                                                                                             Now we have the bonnet open..... Next time, where to throw the spanner in !!    
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              Machine Code for the Oric Atmos (Part 3)    Peter N. Bragg                      
+-------------------------------                                   
+
+The Story so far                                                                
+---------------- Part 1 looked briefly at machine code, the Oric and its        
+Operating System. Part 2 featured a very short Basic "Hexloader" program to     
+provide easy read and write access for machine code on the Oric.                                                                                                Rather than embark on a long theoretical description of the 6502 microprocessor,
+I intend to keep it simple, starting with a few short practical demonstration   
+routines, with which I hope to illustrate the 6502 operation. After all, there  
+is little point in duplicating much of what can already be found in books on    
+the 6502. Once again, if you are new to this, a book on the subject will help.  
+However some basic information, must be at least briefly mentioned in order     
+that newcomers are not left totally in the dark and so we will start with a     
+brief look at how the Instructions and Registers are used.                                                                                                      
+
+Instructions                                                                    
+------------ A computer program, whatever the language used, is simply a list   
+of instructions, plus any data (information) that may be needed for the         
+operation. In Basic for example, the instruction GOTO would be useless without  
+its data (a line number). Machine code works in a similar fashion. Every 6502   
+instruction starts with a single byte called the OPCODE, which tells the 6502   
+chip two things. First, what the instruction has to do. Second, whether or not  
+there will be any data bytes, to be included with the instruction. Any data     
+bytes included in an instruction always follow the opcode and are known as the  
+OPERAND. Depending on the specific instruction, the operand may be one byte or  
+two bytes in length, or there may be no data at all and therefore no operand.   
+So complete instructions will be one byte long when no operand is required and  
+two bytes or three bytes long with an operand, all of which depends on the      
+instruction opcode used.                                                                                                                                        
+
+Register here                                                                   
+------------- It is also neccesary to mention the small storage units built     
+into the 6502 microprocessor. These are called REGISTERS and there are six of   
+them. The 6502 uses them to store and process data, as it works through your    
+program. Not quite the same as a Basic variable, but near enough for jazz !!    
+Initially, we will look at just two of these Registers, the PROGRAM COUNTER and 
+the ACCUMULATOR.                                                                                                                                                
+
+The Program Counter                                                             
+------------------- The microprocessor needs some way of controlling it's       
+progress through the computer memory. You will want the microprocessor to read  
+and process your program instructions, in the correct order, not go leaping     
+around the memory like a demented kangaroo ! The Program Counter (PC for short) 
+provides the microprocessor with that control. It holds a two byte number which 
+is the address of the next instruction to be fetched, and it is updated         
+automaticaly each time a new instruction is fetched for processing. However,    
+there are instructions available (ie. JSR for Jump to SubRoutine) that change   
+the Program Counter address. These are used to access routines in the same way  
+as you would in Basic (ie. using GOSUB).                                                                                                                        The Program Counter is the only two byte Register in the 6502. It needs two     
+bytes, to access 64K of memory, one byte would only access 256 addresses.                                                                                       
+
+The Accumulator                                                                 
+--------------- This is the place where most of your data gets modified or      
+bashed into shape, one byte at a time, by the various instructions at your      
+disposal.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       Data can be added, subtracted, copied or tested etc, it all happens in the      
+Accumulator. The name is often abrieviated to "A Reg." or "Accu", normally I    
+use the latter. Although it can only hold one byte, there are simple ways of    
+dealing with much larger values. Note, by the way, that for the 6502            
+microprocessor, a byte is always an eight bit value (ie. 00 to FF in hex or 255 
+in decimal) and this applies to all machines that use the 6502 microprocessor.                                                                                  
+
+Double Crossing the Oric                                                        
+------------------------ Now we will use a very short and simple routine to     
+illustrate the above information. The routine just puts a couple of crosses in  
+the centre of the display.                                                                                                                                           ......start......                                                                                                                                           Addr :  Code    : Assembly  : Description                                       
+---- :  ----    : --------  : -----------                                       
+101A : A9 2B    : LDA#  "+" : Load Accu with ASCII code for "+"                 
+     :          :           :                                                   
+101C : 8D EC BD : STA  BDEC : Copy Accu contents into Address BDEC,             
+     :          :           :                                                   
+101F : 8D ED BD : STA  BDED : also copy Accu contents into Address BDED.        
+     :          :           :                                                   
+1022 : 60       : RTS       : Fetch Return address and return                   
+     :          :           : from this subroutine, to Basic.                   
+   ......finish......                                                                                                                                          
+
+You will notice that the program listing is divided into four vertical columms. 
+This is a fairly standard arrangement. Starting from the far left, we have the  
+address columm, which gives the location of each instruction. Some people use   
+an additional columm and number the instructions in decimal order as well. I    
+dont bother, but you may find it useful. The second columm from the left lists  
+the hex code instructions that the computer uses. The third columm is for the   
+Assembly Language which provides the hex code instructions in the second columm.
+Finally, the fourth and most important columm on the far right. This is used    
+to describe what is is being done and how. Programming is actually done in the  
+two right hand columms. Assembly Language instructions are chosen and a         
+description of what you are intending to do is written in first. After that the 
+code and addresses can be put in. More on this subject later.                                                                                                   To use this routine, just set your HexLoader to the address 101A and type in -  
+A9 2B 8D EC BD 8D ED BD 60 as per the listing. Use the start address to run it  
+by CALL#101A. Your first machine code program and it did'nt hurt a bit !                                                                                        
+
+Whats it all about, then ?                                                      
+-------------------------- If you look at the routine, you will find that it    
+consists of just four instructions and includes one of each of the three types  
+described above. The first instruction is an opcode with a single data byte     
+operand. The second instruction has two and the last instruction does not need  
+an operand at all.                                                                                                                                              The program simply puts the ASCII code for "+" into the Accumulator and uses it 
+to put a copy of that code into two addresses in display RAM.                                                                                                   The first instruction is LDA, an abrieviation for LoaD Accumulator, the hash    
+sign "#" means IMMEDIATE value which indicates that the value immediately       
+following the opcode is to be put into the Accumulator. The hash (#) sign is    
+always used for this purpose in the 6502 Instruction Set.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       At this point there could have been a slight problem. The Oric also uses the    
+same hash (#) sign to label hex values. I could use "$" or "&" to identify hex  
+values as on other machines. However, as I normally use hex values throughout,  
+unless otherwise stated in my program listings, it is'nt necessary to mark each 
+and every hex code as such. This avoids any clash of meaning and makes the      
+listings that much simpler and quicker to produce.                                                                                                              Because the first instruction required two locations (101A and 101B), the next  
+instruction starts at address 101C. This instruction is STA, an abrieviation    
+for STore copy of Accumulator contents. The two byte Operand is used as an      
+"Absolute" value to locate the address where the Accumulator contents are to be 
+put. The address in this case is in the screen display RAM and notice that the  
+address is put in reverse order, low value, then high value number.                                                                                             Where the instruction includes a two byte operand, the opcode is always         
+followed first by the lowest value byte, then by the highest value byte. In     
+this instruction for example the address required is BDEC so the opcode 8D is   
+followed by the low part of the value which is EC and then by the high part of  
+the value, which is BD (really BD00h) in the third byte.                                                                                                        All "three byte" instructions are written this way and if it seems strange, it  
+could be helpful if you remember the old nursery rhyme "Four and twenty         
+blackbirds baked in a pie" (I say, does the RSPCA know about that ?) and put    
+the least significant (lowest) data byte first after the opcode and then the    
+most significant (highest) data byte last. It is the one awkward thing I found  
+in machine code. However, I soon got used to it. Hex code is simply entered as  
+shown, but if decimal values are used, the address has to be split as shown and 
+the two values calculated separately. Another good reason for using hex code,   
+not decimal.                                                                                                                                                    The third instruction at 101F was simply put in to illustrate that the contents 
+of the Accumulator were not transferred, only copied. The Accumulator still     
+holds the original value after the instruction has been executed and can be     
+used to make as many copies of its contents as you wish.                                                                                                        The fourth and final instruction in the "program" is an example of a single     
+opcode type which does not require any data. The instruction name is RTS which  
+is an abbrieviation for ReTurn from Subroutine. This simple, but essential      
+instruction is used to terminate machine code routines CALLed from Basic.                                                                                       The RTS instruction works in a similar fashion to RETURN in Basic and is more   
+often used in machine code programs, together with another instruction called   
+JSR (Jump to SubRoutine) to produce the machine code equivalent of the Basic    
+GOSUB operation. In our example here the program is CALLed from Basic and a     
+return address is stashed away, to be preserved until the end of the program is 
+reached. At that point, the last instruction retrieves the return address and   
+the microprocessor uses it to return the Oric to Basic operation.                                                                                               Note that the program addresses are in hex as well, it is an easy way to get a  
+grip on the numbering system. These are the numbers that go into the Program    
+Counter. We will be adding to this "program" later.                                                                                                             I have tried to keep this explanation brief and simple. Some items can be       
+looked at in more detail later, others, the ASCII code for instance are found   
+at the back of many computer books. If you are new to all this, experiment a    
+little using the HexLoader. If it goes wrong, there is always the RESET button !                                                                                Decisions, decisions ! Next time, how swear words like NVBDIZC give you status.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+
+
+Machine Code for the Oric Atmos (Part 4)    Peter N. Bragg                      
+-------------------------------                                   
+The Story so far                                                                
+---------------- After a brief look at the Oric and machine code, we used a     
+"HexLoader" program (from O.U.M. Issue 44), to write a short demo routine, to   
+show all three types of machine code instruction used by the Oric's 6502        
+microprocessor.                                                                                                                                                 You might need part 3 of the series to make sense of this paragraph, try        
+crossing the Editor's palm with silver, to obtain a copy, should you need one.  
+If you managed to follow what happened in the routine listed last month, you    
+will not be surprised to find that if you were to insert two extra instructions,
+STA BBA8 and STA BFDF into the routine, after the instruction 101A, you will    
+then get an additional "+" at the start and at the end of the screen display.   
+In fact if you were to extend the routine to include a similar STA instruction  
+for every screen address (see P.238 Atmos Manual), the routine would fill the   
+entire screen with crosses.                                                                                                                                     Don't bother to try that last bit. Such a routine would work, but it would use  
+about 6K of RAM space, which would be a bit silly and there are better ways to  
+achieve the same effect. The main reason for routine that we did use, was to    
+show how the Accumulator works, using a few instructions (LDA and STA etc.).                                                                                    However, if we really did want to produce a screen filled with crosses or a     
+similar operation, without going "bananas" in the process, it would be far      
+better to use a few simple instructions (instead of about 2000), which would    
+allow the computer to decide for itself where to start and stop that operation. 
+This brings us to the third register, which is the STATUS Register.                                                                                             
+
+The Status Register                                                             
+------------------- The Status Register is the microprocessor's decision making 
+unit. Without it, the Oric would be little more than a glorified recording      
+machine. Did you really zap that flying saucer ? The answer to that and many    
+other questions will come from the Status Register.                                                                                                             The microprocessor watches the operation of each program instruction and        
+reports on it, in the Status Register. The result appears as a row of "flags",  
+each of which will say "Yes"(True) or "No"(Not true) to some aspect of the      
+operation of the instruction just processed. The row of so-called "flags" are   
+the reason why the Status Register is often called the "Flag Register". It is a 
+bit like the electronic equivalent of a row of judges at a sports event.                                                                                        The Flag Bits are eight individual binary digits (numbers), but of course they  
+really appear as a single hex byte. Each digit is set to either "1" for YES or  
+"0" for NO, depending on the most recent instruction executed. Although the     
+Status Register provides eight of                                               
+these Flag Bits only seven of them       .....................................  
+are ever used, Flag Bit 5 is ignored.    : NOTE                              :                                          :                                                         							 ---- The drawing printed here     :  
+The seven Flags can be used to           :  is on Disk A017/File             :  
+modify or change the effect of some      :                  "STATUSREG"      :  
+instructions just before they are        :  Set Corner X to 3.8", Corner Y   :  
+actually used. They can make in          :  to 1.5".                         :  
+effect a decision on what those          :  Both X & Y sizes to 1:3.         :  
+instructions will do, based on a         :   Use !PAINT Printout.            :  
+result of another operation, just        :...................................:  
+done.                                                                                                                                                           
+
+For many instructions and a lot of the programming, you can simply ignore the   
+Flags. However there are times when you will find them very useful.                                                                                             One example. There are instructions which make a jump (a Branch) to an address  
+in another part of memory only if a certain Flag Bit is set to "1", but not if  
+the Flag is set at "0". So any operation that affects a Status Flag Bit can be  
+used to control whether your program continues with the routine it is working   
+on, or jumps to a new routine elsewhere in the program.                                                                                                         This could be used where you might want to test for a particular key press. If  
+the correct key is pressed, the appropriate Flag in the Status Register can be  
+made to show that. A simple instruction can then use the Flag to make your      
+program branch off to a specific routine that would deal with that key press.                                                                                   However, if the required key was not pressed, the Status Register will not      
+"Flag" it and the program will be diverted away from that specific routine.                                                                                     Another example. You might want to add up some very large numbers, a game score 
+perhaps, or bank account (I should be that lucky !). The microprocessor allows  
+a similar method of adding numbers, to that used by people. No it does not take 
+its shoes and socks off !! Only politicians and financial planners, do that.                                                                                    The Accumulator can only hold a single byte, so large numbers are broken down   
+into single bytes and dealt with one by one. Anything left over after each      
+addittion (or subtraction) instruction, is "carried" by the Status Register's   
+Carry Flag, just as we make a small mark when adding up columms of figures.                                                                                     It may seem a slow way to add a lot of numbers, but remember this is machine    
+code that we are talking about and a calculation in telephone number sizes can  
+be dealt with at the speed of phttt !!                                                                                                                          
+
+Hang out the Flags                                                              
+------------------ If you look at the 6502 Instruction Set which is fairly      
+widely available in many computer manuals (ie Atmos Manual P261-265.), you will 
+see a columm headed NV*BDIZC. These are the seven Flags in order from Bit 7     
+down to Bit 0. The initials stand for (N)Negative Result, (V)oVerflow Result,   
+(B)Break, (D)Decimal Mode, (I)Interupt, (Z)Zero Result and (C)Carry.                                                                                            I should perhaps warn you at this stage, that the "N" is sometimes referred to  
+as (S)Sign and the Status Register itself, is sometimes referred to as "P" Reg. 
+Truly, Murphy is alive and well and is writing computer manuals !! I prefer to  
+stick with terms that are widely used and are the most descriptive.                                                                                             One good thing is that while the Flags are binary numbers, we can use the Flags 
+without having to mess around with binary code. There are specific instructions 
+for each Flag that make using them quite simple. From personal experience the   
+"C","Z" and "N" Flags appear to be most useful and probably the easiest to use.                                                                                 If you have managed to take on board all that has been written so far, in       
+particular the last two installments on the Program Counter, Accumulator and    
+Status Register you may be encouraged to know that you now have the main        
+essentials needed to understand how machine code works. There are three more    
+registers, which are not much different from what we have already seen, that    
+offer useful extra facilities. It's a bit like starting out in photography with 
+an expensive camera, we may not know what all the knobs are for, but we now     
+should be able to make a few snapshots, to help us get to the next stage.                                                                                       Still awake I hope ??......Next time a few instructions for scrambled Oric !!
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 Machine Code for the Oric Atmos (Part 5)    Peter N. Bragg                      
+-------------------------------                                   
+
+The Story so far                                                                
+---------------- Having looked briefly at the Oric and machine code in general, 
+we then went on to look at the three most important items required for machine  
+code programming. For Oric's 6502 microprocessor, they were three registers     
+called the Program Counter, the Accumulator and the Status Register.                                                                                            At this point, we can now make good use of a small selection of instructions to 
+gain some practical experience. Trying out a few instructions first, to see how 
+they work, should make the rest easier to understand. The Instruction Table     
+below is a reduced version (subset) of the 6502 Instruction Set.                
+                                                                                
+     Accumulator Instructions        Absolute            Immediate             
+                                 instruct  code       instruct  code             
+       Load  Accumulator             LDA  AD xx yy       LDA=  A9 xx                 
+       Store Accumulator             STA  8D xx yy                    
+                                                                        
+       Add with Carry                ADC  6D xx yy       ADC=  69 xx         
+       Subtract with Carry           SBC  ED xx yy       SBC=  E9 xx         
+                                                                                 
+       Compare Accumulator           CMP  CD xx yy       CMP=  C9 xx           
+                                                                               
+     Flag Instructions                                                       
+                                   instruct  code                               
+       Clear Carry Flag to 0         CLC  18      no operand/data                
+       Set   Carry Flag to 1         SEC  38      no operand/data              
+                                                                                  
+     Conditional Branch Instructions                                               
+                                                                                    
+	    Condition             instruct code    Flag set by -                  
+       Branch if Carry Flag = 0      BCC  90 xx   No Carry                         
+       Branch if Carry Flag = 1      BCS  B0 xx   Carry                               
+                                                                          
+       Branch if Zero Flag = 0       BNE  D0 xx   Result Not Zero                 
+       Branch if Zero Flag = 1       BEQ  F0 xx   Result Zero                                                                                                                	 Branch if Negative Flag = 0   BPL  10 xx   Result Plus                     
+       Branch if Negative Flag = 1   BMI  30 xx   Result Minus                 
+                                                                                
+     Subroutine Instruction                                                     
+                                instruct  code                                   
+       Return from SubRoutine        RTS  60      no operand/data                
+
+                                                                              
+We have already met three of the above instructions in Part 3. These were       
+LDA, STA and RTS. To refresh your memory, the RTS instruction is the essential  
+way to end any routine, particularly if you want to return safely to BASIC.                                                                                     
+
+Instruction Modes                                                               
+----------------- The Accumulator instructions in the above list give a choice  
+of two modes of operation. All deal with a single byte of data, using the       
+Accumulator and all except the STA instruction, can be used in either           
+"Absolute" or "Immediate" mode.
+                                                                                                                                 IMMEDIATE (#) instructions supply the required data byte as the operand "xx".                                                                                   ABSOLUTE instructions on the other hand dont include the data byte, instead     
+they give the address of a memory location which holds it.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      As we found in Part 3 of this series, addresses in all Absolute instructions,   
+are written in reverse order, low part in "xx" and high part in "yy". For       
+example, the LDA instruction AD 02 10 would load the contents of location 1002  
+into the Accumulator.                                                                                                                                           The two modes of operation each have their own advantages, which are best       
+appreciated as experience is gained. Immediate instructions can make a program  
+simple to follow and Absolute instructions allow many data items to be more     
+easily arranged in blocks, rather than scattered about inside a program.                                                                                        
+
+Accumulator Instructions                                                        
+------------------------ Five of these are listed here. The first pair are used 
+to set up the Accumulator and/or memory by copying data bytes to and from the   
+Accumulator. The second pair do simple addition and subtraction. The last       
+instruction is used to test the Accumulator contents.
+                                                                                                   
+LDA sets the Accumulator to a hex value in the range 00 to FF.                                                                                                  STA will copy the Accumulator contents to a location/address in memory.                                                                                         ADC will add a single byte hex value to another value already held in the           
+	Accumulator. As its label indicates, it includes the Carry Flag in the          
+	addition operation. For this reason the Carry Flag should be cleared before     
+	using the first ADC instruction in any addition routine. The instruction        
+	CLC will do this by making Carry=0. The Carry Flag operation is then fully      
+	automatic after that.                                                                                                                                           	This means that if you use ADC to add a value to the Accumulator contents       
+	and the result is larger than FF (255 decimal), the Carry Flag will be set      
+	to "1" and the next ADC instruction will include that in its sums.              
+	Obviously because the Accumulator only holds one byte, you should use STA       
+	to save each result between ADC instructions.                                                                                                               SBC is used in exactly the same way as ADC, the only difference is that as it       
+	is a subtraction operation, the Carry Flag must be set to "1" (not cleared)     
+	at the start of operations. The instruction SEC will do this by making          
+	Carry=1.                                                                                                                                                    CMP is used to test the Accumulator contents. It only affects the Flags in the      
+	Status Register, the Accumulator contents are not changed in any way. For       
+	example, if the Accumulator contained the value 58 hex, then an instruction,    
+	CMP#58 which is C9 58 would set the Zero Flag to 1, showing that the            
+	difference between the two values in the operand and Accumulator is zero.       
+	CMP can be used to set up the Carry, Zero and Negative Flags for the Branch     
+	instructions, described further on.                                                                                                                         
+
+Flag Instructions                                                               
+----------------- Just two of these here. Simple enough, they just set or clear 
+the Carry Flag for you. One example of their use appears in the description of  
+the ADC and SBC operations. Other uses will become apparent later on.                                                                                           Conditional Branch Instructions                                                 
+------------------------------- There are six listed, all of them identical     
+in operation. The only difference lies in the individual conditions for the     
+operation to happen. If these conditions are not met the instruction will be    
+ignored. If the specific Flag conditions are correct for a particular Branch    
+instruction when the program reaches it, the instruction will execute a short   
+relative jump to a destination set in the Branch instruction operand "xx".                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+
+Hop, Skip and Jump                                                              
+------------------ Setting the Branch instruction's operand for its relative    
+jump is fairly easy, although you would'nt think so from some descriptions I    
+have read. Because the operand is limited to one byte, the relative jump is    
+limited to a maximum of 256(dec) locations, that is 128 locations in each       
+direction. A value from 00 up to 7F will jump forward and a value from FF down  
+to 80 will jump back.                                                                                                                                           For example, a value of 05 will jump forward five locations. A value of FB      
+would jump back five locations, which would actually make the jump destination  
+just three locations behind the actual Branch instruction. Finally a value of   
+00 will obviously produce no jump at all.                                                                                                                       Short distances can be easily counted using fingers and Mark One eyeball. Some  
+enthusiasts calculate these things in binary using "Twos Complement". Good luck 
+to them !! Binary calculations should only be used to impress the neighbours    
+and confuse the Tax Man. The best way to work out the Branch operand for the    
+relative jump is to let Oric do it for you. A small extension to the HexLoader  
+program (published in Part 2) will do the trick. We wont need it here so I will 
+include the updated version in the next part of the series.                                                                                                     
+
+Summary                                                                         
+------- The above list of instructions is perhaps about one fifth of the full   
+instruction set. The list is much simplified by getting away from the           
+traditional alphabetical format. It is easier to understand the instructions    
+when you begin to see that a lot of them are related to each other and in many  
+cases, are just providing different options on a single operation (eg. Branches)
+In fact, as we progress, you will find that this is true for a large part of    
+the 6502 Instruction Set. Even some of the opcodes seem to be related.                                                                                          
+
+Puzzle Korner                                                                   
+------------- It is a rotten trick to publish a routine with no supporting      
+information. Even worse, there are'nt any Assembler labels for the instructions.
+I wonder what it does and how it works ? ?     Despicable, thats me !!                                                                                                  	  address  ................hex.code.......................                
+  The     1010:  A9 A8 8D 1D 10 A9 BB 8D 1E 10 A9 2B 8D A8 BB 18                
+routine   1020:  AD 1D 10 69 01 8D 1D 10 AD 1E 10 69 00 8D 1E 10                
+-------   1030:  C9 BF D0 E6 AD 1D 10 C9 E0 D0 DF 60 ....end....                                                                                                Seriously though, I wanted to include a routine that would illustrate some of   
+the Instruction Table above. Although the Table only contains fourteen          
+instructions they are sufficent for programming and divide roughly into four    
+groups. Essentialy they provide simple data transfer (LDA/STA), simple          
+arithmetic (ADC/SBC) also testing (CMP) for the purpose of (using Branches)     
+deciding which course of action to take next.                                                                                                                   As we are running out of space, we will have to wait until next time to look at 
+the routine properly. Normally I would never produce a routine without any      
+supporting information, but just this once, it will give you something to look  
+at and see what you can find out about it. The routine is nothing much and may  
+well make the experienced programmer, cringe. All the instructions appear in    
+the table above. There are two branches, both jump to =101A. The routine starts 
+from =1010 and finishes at =103B. To run it CALL=1010 and dont forget the       
+golden rule "Save all machine code programs, before running for the first time".
+Part 3 and 4 of this series will also provide some clues.                      
+                                                                                 
+Now we can branch out......................Next time how to make Oric jump !!  
+ 
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              Machine Code for the Oric Atmos (Part 6)    Peter N. Bragg                      
+-------------------------------                                   
+
+The Story so far                                                                
+---------------- We have looked at the basic requirements for machine code      
+programming using the Oric. In particular we looked at the Accumulator, Program 
+Counter and Status Register, all of which are needed to operate and control     
+machine code programs. A small table (subset) of instructions together with a   
+description of their operation, was published in the last issue, together with  
+a short machine code program, using instructions from that small table only.    
+It would be useful to have that issue (Part 5) on hand while reading this part.                                                                                 
+
+If all else fails, read the instructions                                        
+---------------------------------------- That machine code program in the last  
+issue, was something of a mystery, just three lines of code and no info, just   
+like certain computer manuals I have read. All will now be revealed.                                                                                            The usual way to write a machine code program is to use assembler labels, so    
+the first job is to provide those for our little mystery routine. The listing   
+shown here is the same routine, as before, except here all the instructions     
+have been separated out and labelled using the small instruction table, shown   
+last time. A brief description in two columms, has also been added.              
+                                                                               Addr...Code.....Assembly.........Description.................    SCREEN FILL    
+                         SET UP SCREEN WRITE INSTRUCTION         -----------    
+1010:A9 A8      LDA# A8  :  Put A8 into Accu and copy        : Put the address  
+1012:8D 1D 10   STA  101D:    it into location 101D          :    BBA8 into     
+1015:A9 BB      LDA# BB  :   then repeat that, to put        : STA instruction  
+1017:8D 1E 10   STA  101E:    BB into location 101E.         :       101C.      
+
+                         WRITE ITEM TO SCREEN                                   
+101A:A9 2B      LDA# 2B  :  Put "+" character into           : Put item into    
+101C:8D A8 BB   STA  BBA8:      current screen address.      : display via Accu. 
+                                                                                 
+                         UPDATE SCREEN WRITE ADDRESS                            
+101F:18         CLC      :  Clear Carry Flag to "0"          : Set next address 
+1020:AD 1D 10   LDA  101D:  Fetch 101D contents and          : where next item  
+1023:69 01      ADC# 01  :      add 01 to them, then         : "+" is to be     
+1025:8D 1D 10   STA  101D:      put them back.               : displayed, by    
+1028:AD 1E 10   LDA  101E:  Fetch 101E contents and          : simply adding 01 
+102B:69 00      ADC# 00  :      add Carry (if any) and       : to instruction   
+102D:8D 1E 10   STA  101E:      put them back.               : 101C address.     
+                                                                                 
+                         IS IT SCREEN END YET ?                                 
+1030:C9 BF      CMP# BF  :  Does 101E contain value BF ?     : Test the address 
+1032:D0 E6      BNE  101A:      back to Screen Write if not. : of instruct 101C.
+1034:AD 1D 10   LDA  101D:  Fetch 101D contents and test,    :   If it is at    
+1037:C9 E0      CMP# E0  :    does it contain value E0 ?     : BFE0 (screen end)
+1039:D0 DF      BNE  101A:      back to Screen Write if not. : then finish/exit.  
+                                                                                   
+                         FINISH                                                 
+103B:60         RTS      :  Exit, back to Basic.                                
+                                                                                
+Making it clear                                                                 
+--------------- If you entered the program as listed in the last issue and then 
+used the CALL#1010 to run it, you should have got an instant screen full of     
+crosses. The program is in fact, a simple screen clearing routine, not a lot    
+different in effect to that produced by using the Basic's own CLS command.                                                                                      
+
+The crosses are only used to check operation, it is all too easy to get a blank 
+look from the Oric by accidental means. If you were to change the code in       
+location 101B from 2B(+),to 20(Space), you will indeed clear the screen display.
+Of course our little "eager beaver" will print "Ready" on our nice clear screen,
+but lets ignore that for the moment and stick to crosses. The main idea behind  
+the program was to demonstrate how some of the instructions listed in the       
+Instruction subset, last issue, can be used.                                                                                                                    Note - all values are in hex. Hash (#) indicates "Immediate" instructions only.                                                                                 In an earlier issue, we used a short routine to put just two crosses on the     
+screen and and subsequently worked out, that an extension to that particular    
+routine, to cover the whole screen with crosses, would need something in the    
+order of 6K bytes. The program/routine shown here does the job, using only a    
+small fraction of that and is obviously a more practical solution. The          
+improvement is the result of having a few more instructions, now at our         
+disposal. This program/routine can be divided into four distinct operations.                                                                                    
+
+WRITE ITEM TO SCREEN                                                            
+-------------------- Lets start with this. The purpose of the program is to     
+fill the screen with one character ("+"), so most of the action is centred on   
+this operation. It consists of just two instructions. The first loads the       
+Accumulator with the character code (2B for "+"). The second instruction is a   
+STA instruction, set to a screen address. This instruction at 101C, is then     
+used to put the character ("+") from the Accumulator onto the screen.                                                                                           
+
+UPDATE SCREEN WRITE ADDRESS                                                     
+--------------------------- Clearly there is a need to change and update the    
+address/operand of STA instruction 101C, after each screen write operation.     
+Without that, the end result of the program, would be just one "+" on the       
+display screen. This operation updates the instruction address, simply by       
+increasing its value by one every time it has been used.                                                                                                        The update operation uses a couple of ADC# instructions to add 01 to the value  
+held in 101D and 101E, for STA instruction address. As a result the address     
+which starts at BBA8, will eventualy progress through every screen address in   
+turn, putting a "+" in each one, as the program runs.                                                                                                           Addition operations must start with a CLC instruction to CLear the Carry (to 0),
+before first ADC instruction, because the ADC instruction always includes the   
+Carry Flag in any addition.                                                                                                                                     The address to be updated is a two byte operand, so the addition has to be done 
+in two parts. The value 01 is added to the low part of the address first and    
+the result is saved. Then a value 00 is added to the high part of the address.  
+The second action may sound a bit daft, but in fact it is done to allow any     
+surplus from the first addition to be carried over by the Carry Flag.                                                                                           For an example of how this works, assume that the address has reached BBFF.     
+The addition operation will start by fetching the address low part (FF) from    
+101D into the Accumulator. Adding 01 plus the Carry (at 0) to the value FF,     
+will produce the result 100, which is too large to fit into the Accumulator.    
+What happens then is that the "00" goes into the Accumulator and the Carry Flag 
+is set for the "1". The Accumulator result is put back into 101D. The next part 
+of the operation deals with the high part of the address, which in this example 
+is BB. This time it is BB plus 00 plus 1 (for Carry). Result of this is BC,     
+which is then put back into 101E. So the end result of this particular addition 
+is that the instruction 101C operand/address is changed from BBFF to BC00.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      If you find all that difficult, a little practical demonstration might help.    
+Load the program into the Oric as shown. Now put instruction code 60 into       
+location 1030. That is an RTS instruction which will terminate the routine      
+there. Now CALL#101F several times and use the Hexloader (published in Part 2), 
+or similar code reading utility to see the effect on locations 101D and 101E    
+each time. Experiment with different values in those locations and also in      
+the two ADC# instructions. This should make it easier to see how "addition"     
+operations work. This type of operation can be extended for even larger values  
+and can be used in many computer programs (eg. plotting for graphics).                                                                                          
+
+IS IT SCREEN END YET ?                                                          
+---------------------- Having arranged to update the screen writing operation,  
+we can now use a simple jump to loop back and continue filling the screen with  
+"+". However this produces a small problem. What happens when we reach the end  
+of the screen memory area ? Left to it's own devices, the Oric would be quite   
+happy to trundle through the RAM, depositing crosses everywhere, it can cover   
+the entire memory in less than three seconds, but of course our little          
+electronic friend would have plastered something vital and "gone ape" long      
+before that. We need some way of telling Oric that it has reached the end of    
+the screen memory area and would it please stop.                                                                                                                The best way, is to test the screen writing address in the instruction 101C     
+after each update operation. The screen display area we are using runs from the 
+top left screen corner, at BBA8, down to bottom right corner at BFDF, so the    
+address to stop at, is BFE0. We can use the Compare and the Conditional Branch  
+instructions, which we looked at last time, to test for that address.                                                                                           Again, we are using the Accumulator so we have to deal with one byte at a time. 
+The address BFE0, being two bytes, is split for the test into BF and E0.                                                                                        The Accumulator already holds a copy of the address high byte as a result of    
+the update operation, when the program reaches the Compare instruction at 1030, 
+so we might as well test that first. The second CMP# at 1037 tests a copy of    
+address low byte, which is fetched by instruction 1034. If either one of the    
+CMP#/BNE instruction pairs fail to find the value that it is looking for, it    
+will clear the Zero Flag to "0" which activates the Branch (BNE) instruction,   
+so that the Oric is sent straight back to the screen write operation again.                                                                                     When the address tested, finally reaches BFE0, both CMP# instructions set the   
+Zero Flag to "1" which disables both BNE instructions and the Oric will then    
+pass on straight through to RTS instruction at 103B, for Finish/Exit to Basic.                                                                                  Again, you can experiment with the values in the instruction 1030 and 1037 to   
+stop the routine at different parts of the screen display.                                                                                                      The above operation shows how you can use the Compare and Branch instructions   
+to test for a specific value and then take appropriate action on the result.    
+Testing for a single byte value such as a key press input would be even simpler,
+needing only one Compare and Branch instruction pair.                                                                                                           
+
+SET UP SCREEN WRITE INSTRUCTION                                                 
+------------------------------- This was left to last, because if you have      
+understood what has been written so far, the listing really says it all.        
+It may even seem a little unneccessary to load the start address into           
+instruction 101C, when it has already been written in there. True, but think    
+about what happens when you CALL#1010 twice !!                                                                                                                  Thats the simple graffiti.........next time "HexLoader II" for real wrecking !!                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
